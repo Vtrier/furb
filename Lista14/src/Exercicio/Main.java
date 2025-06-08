@@ -4,12 +4,12 @@
  */
 package Exercicio;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -24,19 +24,40 @@ public class Main {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         File arquivo = new File("C:\\Users\\Usuário\\OneDrive\\Documentos\\NetBeansProjects\\Lista14\\src\\Exercicio\\L14_municipios.csv");
         Scanner scanner = new Scanner(arquivo, "UTF-8");
-        FileInputStream fis = new FileInputStream(arquivo);
-        BufferedInputStream bis = new BufferedInputStream(fis);
-        RandomAccessFile raf = new RandomAccessFile(arquivo, "r");
-        raf.seek(52);
         String separador = ";";
-        int separadorContador = 0;
+        int maxPop = Integer.MIN_VALUE;
+        int minPop = Integer.MAX_VALUE;
+        int populacao = 0;
+        String nomeCidadeMaxPop = "";
+        String nomeCidadeMinPop = "";
+
+        FileInputStream fis = new FileInputStream(arquivo);
+        InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+        BufferedReader bf = new BufferedReader(isr);
+
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
 
         while (scanner.hasNextLine()) {
-            if(scanner.next().equals(separador)){
-                System.out.println("bunda");
+            String linha = scanner.nextLine();
+            String[] colunas = linha.split(separador);
+            populacao = Integer.parseInt(colunas[3]);
+
+//            System.out.println(colunas[1] + " " + colunas[3]);
+
+            if (populacao > maxPop) {
+                maxPop = populacao;
+                nomeCidadeMaxPop = colunas[1];
             }
-            
+            if (populacao < minPop) {
+                minPop = populacao;
+                nomeCidadeMinPop = colunas[1];
+            }
         }
+
+        System.out.println("Maior populacao: "+ nomeCidadeMaxPop+": " + maxPop);
+        System.out.println("Menor populacao: "+ nomeCidadeMinPop+": " + minPop);
     }
 
 }
