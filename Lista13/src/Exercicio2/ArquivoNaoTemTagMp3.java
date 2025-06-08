@@ -9,7 +9,7 @@ package Exercicio2;
  * @author Usuário
  */
 public class ArquivoNaoTemTagMp3 extends IllegalArgumentException{
-    public void ArquivoNaoTemTagMp3(String arquivo){
+    public ArquivoNaoTemTagMp3(String arquivo){
         
     }
 }
