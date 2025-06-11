@@ -4,7 +4,7 @@
  */
 package view;
 
-import javax.swing.JFormattedTextField;
+import java.io.IOException;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -12,9 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import model.ArquivoCSV;
 import model.Despesa;
 import model.GerenciadorFinanceiro;
 
@@ -28,6 +27,9 @@ public class TelaIncluirDespesas extends javax.swing.JDialog {
     
     /**
      * Creates new form TelaIncluirDespesas
+     * @param parent
+     * @param modal
+     * @param gerenciador
      */
     public TelaIncluirDespesas(java.awt.Frame parent, boolean modal, GerenciadorFinanceiro gerenciador) {
         this.gerenciador = gerenciador;
@@ -232,6 +234,11 @@ public class TelaIncluirDespesas extends javax.swing.JDialog {
         
         Despesa despesa = new Despesa(descricao, valorDespesa, data, Despesa.CategoriaDespesa.valueOf(tipoDespesa));
         gerenciador.adicionarDespesa(despesa);
+        try {
+            ArquivoCSV.salvarDados("src\\model\\despesas.csv", gerenciador.getDespesas());
+        } catch (IOException ex) {
+            Logger.getLogger(TelaIncluirDespesas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_btAdicionarActionPerformed
 

@@ -16,6 +16,9 @@ public class TelaListaDespesas extends javax.swing.JDialog {
 
     /**
      * Creates new form TelaListaDespesas
+     * @param parent
+     * @param modal
+     * @param gerenciador
      */
     public TelaListaDespesas(java.awt.Frame parent, boolean modal, GerenciadorFinanceiro gerenciador) {
         initComponents();

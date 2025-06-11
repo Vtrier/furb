@@ -4,6 +4,7 @@
  */
 package view;
 
+import java.io.IOException;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import model.ArquivoCSV;
 import model.GerenciadorFinanceiro;
 import model.Receita;
 
@@ -206,6 +208,11 @@ public class TelaIncluirReceitas extends javax.swing.JDialog {
         
         Receita receita = new Receita(descricao, valorReceita, data, Receita.CategoriaReceita.valueOf(tipoReceita));
         gerenciador.adicionarReceita(receita);
+        try {
+            ArquivoCSV.salvarDados("src\\model\\receitas.csv", gerenciador.getReceitas());
+        } catch (IOException ex) {
+            Logger.getLogger(TelaIncluirReceitas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_btAdicionarActionPerformed
 

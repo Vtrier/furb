@@ -19,7 +19,11 @@ public class TelaListaLancamentos extends javax.swing.JDialog {
      */
     public TelaListaLancamentos(java.awt.Frame parent, boolean modal, GerenciadorFinanceiro gerenciador) {
         initComponents();
-        taListaLancamentos.setText(gerenciador.extratoComSaldo().toString());
+        StringBuilder texto = new StringBuilder();
+        for (String linha : gerenciador.extratoComSaldo()) {
+            texto.append(linha).append("\n");
+        }
+        taListaLancamentos.setText(texto.toString());
     }
 
     /**

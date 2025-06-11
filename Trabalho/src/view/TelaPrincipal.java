@@ -4,7 +4,10 @@
  */
 package view;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.*;
 
@@ -14,15 +17,15 @@ import model.*;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     
-    private GerenciadorFinanceiro gerenciador;
+    private final GerenciadorFinanceiro gerenciador;
 
     public GerenciadorFinanceiro getGerenciador() {
         return gerenciador;
     }
     
-    
     /**
      * Creates new form TelaPrincipal
+     * @param gerenciador
      */
     public TelaPrincipal(GerenciadorFinanceiro gerenciador) {
         this.gerenciador = gerenciador;
@@ -213,8 +216,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 GerenciadorFinanceiro gerenciador = new GerenciadorFinanceiro();
+                try {
+                    for (Receita r : ArquivoCSV.carregarReceitas("src\\model\\receitas.csv")) {
+                        gerenciador.adicionarReceita(r);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    for (Despesa d : ArquivoCSV.carregarDespesas("src\\model\\despesas.csv")) {
+                        gerenciador.adicionarDespesa(d);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 new TelaPrincipal(gerenciador).setVisible(true);
             }
         });

@@ -4,9 +4,9 @@
  */
 package model;
 
-
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -14,10 +14,15 @@ import java.util.*;
  * @author Usuário
  */
 public class ArquivoCSV {
+
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public static void salvarDados(String arquivo, List<? extends Lancamento> lista) throws IOException {
         try (PrintWriter pw = new PrintWriter(new FileWriter(arquivo))) {
+
             for (Lancamento l : lista) {
-                pw.printf("%s,%f,%s,%s\n", l.getDescricao(), l.getValor(), l.getData(), l.getCategoria());
+                String data = l.getData().format(formatter);
+                pw.printf(Locale.US,"%s;%.2f;%s;%s\n", l.getDescricao(), l.getValor(), data, l.getCategoria());
             }
         }
     }
@@ -27,9 +32,9 @@ public class ArquivoCSV {
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(",");
+                String[] partes = linha.split(";");
                 receitas.add(new Receita(partes[0], Double.parseDouble(partes[1]),
-                        LocalDate.parse(partes[2]), Receita.CategoriaReceita.valueOf(partes[3])));
+                        LocalDate.parse(partes[2], formatter), Receita.CategoriaReceita.valueOf(partes[3])));
             }
         }
         return receitas;
@@ -40,9 +45,9 @@ public class ArquivoCSV {
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                String[] partes = linha.split(",");
+                String[] partes = linha.split(";");
                 despesas.add(new Despesa(partes[0], Double.parseDouble(partes[1]),
-                        LocalDate.parse(partes[2]), Despesa.CategoriaDespesa.valueOf(partes[3])));
+                        LocalDate.parse(partes[2], formatter), Despesa.CategoriaDespesa.valueOf(partes[3])));
             }
         }
         return despesas;

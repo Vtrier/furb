@@ -4,7 +4,9 @@
  */
 package model;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -45,22 +47,30 @@ public class GerenciadorFinanceiro {
     }
 
     public List<String> extratoComSaldo() {
-        List<Lancamento> lancamentos = listarLancamentosOrdenados();
-        List<String> extrato = new ArrayList<>();
-        double saldo = 0;
-        for (Lancamento l : lancamentos) {
-            if (l instanceof Receita) {
-                saldo += l.getValor();
-            } else {
-                saldo -= l.getValor();
-            }
-            extrato.add(String.format("%s - %s - R$ %.2f - Saldo: R$ %.2f\n",
-                    l.getData(), l.getDescricao(),
-                    (l instanceof Receita ? l.getValor() : -l.getValor()),
-                    saldo));
-        }
-        return extrato;
+    List<Lancamento> lancamentos = listarLancamentosOrdenados();
+    List<String> extrato = new ArrayList<>();
+    double saldo = 0;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    for (Lancamento l : lancamentos) {
+        double valor = l.getValor();
+        String tipo = (l instanceof Receita) ? "Receita" : "Despesa";
+
+        saldo += (l instanceof Receita) ? valor : -valor;
+
+        extrato.add(String.format(
+            "\nTipo: %s\nDescrição: %s\nValor: R$ %.2f\nData: %s\nSaldo após: R$ %.2f\n",
+            tipo,
+            l.getDescricao(),
+            valor,
+            l.getData().format(formatter),
+            saldo
+        ));
+        extrato.add("--------------------------------------------------");
     }
+
+    return extrato;
+}
 
     public List<Receita> getReceitas() { return receitas; }
     public List<Despesa> getDespesas() { return despesas; }
