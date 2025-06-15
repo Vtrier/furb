@@ -211,10 +211,12 @@ public class TelaIncluirDespesas extends javax.swing.JDialog {
         }
         
         try {
-            if (tfValor.getText().isBlank()) {
+            if (tfValor.getText().isBlank())
                 throw new Exception();
-            }
+
             valorDespesa = Double.parseDouble(tfValor.getText());
+            if(valorDespesa<=0)
+                throw new Exception();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "ERRO: Campo Valor não está correto");
             return;
@@ -235,7 +237,7 @@ public class TelaIncluirDespesas extends javax.swing.JDialog {
         Despesa despesa = new Despesa(descricao, valorDespesa, data, Despesa.CategoriaDespesa.valueOf(tipoDespesa));
         gerenciador.adicionarDespesa(despesa);
         try {
-            ArquivoCSV.salvarDados("src\\model\\despesas.csv", gerenciador.getDespesas());
+            ArquivoCSV.salvarDespesa("src\\model\\despesas.csv", gerenciador.getDespesas());
         } catch (IOException ex) {
             Logger.getLogger(TelaIncluirDespesas.class.getName()).log(Level.SEVERE, null, ex);
         }

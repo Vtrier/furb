@@ -4,9 +4,7 @@
  */
 package view;
 
-import java.util.List;
 import model.GerenciadorFinanceiro;
-import model.*;
 
 /**
  *
@@ -16,11 +14,14 @@ public class TelaListaLancamentos extends javax.swing.JDialog {
 
     /**
      * Creates new form TelaListaLancamentos
+     * @param parent
+     * @param modal
+     * @param gerenciador
      */
     public TelaListaLancamentos(java.awt.Frame parent, boolean modal, GerenciadorFinanceiro gerenciador) {
         initComponents();
         StringBuilder texto = new StringBuilder();
-        for (String linha : gerenciador.extratoComSaldo()) {
+        for (String linha : gerenciador.verLancamentos()) {
             texto.append(linha).append("\n");
         }
         taListaLancamentos.setText(texto.toString());
@@ -40,6 +41,7 @@ public class TelaListaLancamentos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        taListaLancamentos.setEditable(false);
         taListaLancamentos.setColumns(20);
         taListaLancamentos.setRows(5);
         jScrollPane1.setViewportView(taListaLancamentos);

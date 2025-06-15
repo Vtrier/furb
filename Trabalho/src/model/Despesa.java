@@ -1,33 +1,53 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
- *
- * @author Usuário
+ * Representa uma despesa financeira com categoria específica.
+ * @author Vítor Hugo Trierveiler e João Bernardo Porto
  */
 public class Despesa extends Lancamento {
+
+    /**
+     * Enumeração das categorias de despesa.
+     */
     public enum CategoriaDespesa {
         ALIMENTACAO, TRANSPORTE, RESIDENCIA, SAUDE, EDUCACAO, ENTRETENIMENTO, OUTRO
     }
 
-    private CategoriaDespesa categoria;
-
-    public Despesa(String descricao, double valor, LocalDate data, CategoriaDespesa categoria) {
-        super(descricao, valor, data);
-        this.categoria = categoria;
-    }
-
-    @Override
-    public String getCategoria() {
-        return categoria.name();
+    public CategoriaDespesa getCategoria() {
+        return categoria;
     }
     
+    @Override
+    public String getNomeCategoria() {
+        return categoria.toString();
+    }
+    
+    public void setCategoria(CategoriaDespesa categoria){
+        this.categoria = categoria;
+    }
+    
+    private CategoriaDespesa categoria;
+    
+    /**
+     * Construtor para Despesa.
+     * @param descricao Descrição da despesa
+     * @param valor Valor da despesa
+     * @param data Data da despesa
+     * @param categoria Categoria da despesa
+     */
+    public Despesa(String descricao, double valor, LocalDate data, CategoriaDespesa categoria) {
+        setDescricao(descricao);
+        setValor(valor);
+        setData(data);
+        setCategoria(categoria);
+    }
+    
+    /**
+     * Metodo toString sobrescrito para retornar texto ja formatado.
+     */
     @Override
     public String toString() {
         return "Descrição: " + descricao + "\n"

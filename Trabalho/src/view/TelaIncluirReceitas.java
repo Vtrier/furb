@@ -5,7 +5,6 @@
 package view;
 
 import java.io.IOException;
-import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -13,8 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import model.ArquivoCSV;
 import model.GerenciadorFinanceiro;
@@ -30,6 +27,9 @@ public class TelaIncluirReceitas extends javax.swing.JDialog {
     
     /**
      * Creates new form TelaIncluirReceitas
+     * @param parent
+     * @param modal
+     * @param gerenciador
      */
     public TelaIncluirReceitas(java.awt.Frame parent, boolean modal, GerenciadorFinanceiro gerenciador) {
         this.gerenciador = gerenciador;
@@ -185,10 +185,12 @@ public class TelaIncluirReceitas extends javax.swing.JDialog {
         }
         
         try {
-            if (tfValor.getText().isBlank()) {
+            if (tfValor.getText().isBlank()) 
                 throw new Exception();
-            }
+            
             valorReceita = Double.parseDouble(tfValor.getText());
+            if(valorReceita<=0)
+                throw new Exception();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "ERRO: Campo Valor não está correto");
             return;
@@ -209,7 +211,7 @@ public class TelaIncluirReceitas extends javax.swing.JDialog {
         Receita receita = new Receita(descricao, valorReceita, data, Receita.CategoriaReceita.valueOf(tipoReceita));
         gerenciador.adicionarReceita(receita);
         try {
-            ArquivoCSV.salvarDados("src\\model\\receitas.csv", gerenciador.getReceitas());
+            ArquivoCSV.salvarReceita("src\\model\\receitas.csv", gerenciador.getReceitas());
         } catch (IOException ex) {
             Logger.getLogger(TelaIncluirReceitas.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -38,6 +38,8 @@
               <Component id="btListarDespesas" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btListarLancamentos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btApagarDados" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -54,6 +56,7 @@
                   <Component id="btListarReceitas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btListarDespesas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btListarLancamentos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btApagarDados" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
@@ -115,6 +118,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btListarLancamentosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btApagarDados">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apagar Dados Salvos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btApagarDadosActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

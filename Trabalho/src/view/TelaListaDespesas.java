@@ -45,6 +45,7 @@ public class TelaListaDespesas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        taListaDespesas.setEditable(false);
         taListaDespesas.setColumns(20);
         taListaDespesas.setRows(5);
         jScrollPane1.setViewportView(taListaDespesas);

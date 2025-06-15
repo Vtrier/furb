@@ -1,34 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * Representa uma receita financeira com categoria específica.
  *
- * @author Usuário
+ * @author Vítor Hugo Trierveiler e João Bernardo Porto
  */
 public class Receita extends Lancamento {
 
+    /**
+     * Enumeração das categorias de receita.
+     */
     public enum CategoriaReceita {
         SALARIO, DECIMO_TERCEIRO, FERIAS, OUTRO
     }
 
-    private CategoriaReceita categoria;
+    @Override
+    public String getNomeCategoria() {
+        return categoria.toString();
+    }
 
-    public Receita(String descricao, double valor, LocalDate data, CategoriaReceita categoria) {
-        super(descricao, valor, data);
+    public CategoriaReceita getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaReceita categoria) {
         this.categoria = categoria;
     }
 
-    @Override
-    public String getCategoria() {
-        return categoria.name();
+    private CategoriaReceita categoria;
+
+    /**
+     * Construtor para Receita.
+     *
+     * @param descricao Descrição da receita
+     * @param valor Valor da receita
+     * @param data Data da receita
+     * @param categoria Categoria da receita
+     */
+    public Receita(String descricao, double valor, LocalDate data, CategoriaReceita categoria) {
+        setDescricao(descricao);
+        setValor(valor);
+        setData(data);
+        setCategoria(categoria);
     }
 
+    /**
+     * Metodo toString sobrescrito para retornar texto ja formatado.
+     */
     @Override
     public String toString() {
         return "Descrição: " + descricao + "\n"
